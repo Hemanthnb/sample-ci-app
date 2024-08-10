@@ -3,7 +3,7 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - '!main'  # Excludes main branch from running this workflow
+      - '**'  # Runs on push to any branch
   pull_request:
     branches:
       - main  # Runs on PRs targeting the main branch
@@ -12,6 +12,7 @@ jobs:
   code-validation:
     name: Code Validation (Linting)
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'  # Skip this job on direct pushes to main
 
     steps:
       - name: Checkout code
