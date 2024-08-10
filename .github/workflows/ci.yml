@@ -3,10 +3,10 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - '**'  # Runs on every push to any branch
+      - '!main'  # Excludes main branch from running this workflow
   pull_request:
     branches:
-      - main  # Runs on pull requests targeting the main branch
+      - main  # Runs on PRs targeting the main branch
 
 jobs:
   code-validation:
@@ -32,7 +32,7 @@ jobs:
     name: Run Unit Tests
     runs-on: ubuntu-latest
     needs: code-validation
-    if: github.event_name == 'pull_request'  # Only runs on pull requests to main
+    if: github.event_name == 'pull_request'  # Only runs on PRs
 
     steps:
       - name: Checkout code
